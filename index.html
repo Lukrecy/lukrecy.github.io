@@ -4,56 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
-    <title>My PWA</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Мое PWA</title>
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <h1>Открытие приложений</h1>
-    <script>
-        const appLinks = [
-            'tinkoffbank://',
-            'wheels://',
-            'docs://'
-        ];
-
-        let currentAppIndex = 0;
-
-        function openApp(url) {
-            window.location.href = url;
-
-            setTimeout(() => {
-                currentAppIndex++;
-                if (currentAppIndex < appLinks.length) {
-                    tryNextApp();
-                } else {
-                    alert('Все приложения были проверены.');
-                }
-            }, 3000);
-        }
-
-        function tryNextApp() {
-            if (currentAppIndex < appLinks.length) {
-                const url = appLinks[currentAppIndex];
-                const userConfirmed = confirm(Хотите открыть приложение по ссылке: ${url}?);
-
-                if (userConfirmed) {
-                    openApp(url);
-                } else {
-                    currentAppIndex++;
-                    tryNextApp();
-                }
-            }
-        }
-
-        // Начинаем перебор приложений
-        tryNextApp();
-
-        // Регистрация сервис-воркера
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(() => console.log('Сервис-воркер зарегистрирован'))
-                .catch(err => console.error('Ошибка регистрации сервис-воркера:', err));
-        }
-    </script>
+    <div id="app"></div>
 </body>
 </html>
