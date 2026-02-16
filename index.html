@@ -11,15 +11,15 @@
 
     <script>
         const appLinks = [
-            'tinkoffbank://Main', // Диплинк для первого приложения
-            'docs://Main', // Диплинк для второго приложения
-            'wheels://Main'  // Диплинк для третьего приложения
+            'tinkoffbank://Main', // Замените на ваши диплинки
+            'docs://Main',
+            'wheels://Main'
         ];
 
         function openApp(link) {
             return new Promise((resolve) => {
                 const startTime = Date.now();
-                const timeout = 2000; // Таймаут для проверки (2 секунды)
+                const timeout = 2000; // Таймаут в миллисекундах
 
                 const iframe = document.createElement('iframe');
                 iframe.style.display = 'none';
@@ -45,12 +45,13 @@
                 const opened = await openApp(link);
                 if (opened) {
                     console.log(Приложение открыто по ссылке: ${link});
+                    alert(Приложение открыто по ссылке: ${link});
                     return; // Выход из функции, если приложение открылось
                 } else {
                     console.log(Приложение не найдено по ссылке: ${link});
                 }
             }
-            console.log('Ни одно из приложений не установлено.');
+            alert('Ни одно из приложений не установлено.');
         }
 
         document.getElementById('checkAppsButton').addEventListener('click', checkApps);
