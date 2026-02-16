@@ -3,11 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <title>Мое PWA</title>
-    <script src="app.js" defer></script>
+    <title>Проверка приложений</title>
 </head>
 <body>
-    <div id="app"></div>
+    <h1>Проверка наличия приложений</h1>
+    <button id="checkAppsButton">Проверить приложения</button>
+
+    <script>
+        const appLinks = [
+            'tinkoffbank://Main', // Диплинк для первого приложения
+            'docs://Main', // Диплинк для второго приложения
+            'wheels://Main'  // Диплинк для третьего приложения
+        ];
+
+        function openApp(link) {
+            return new Promise((resolve) => {
+                const startTime = Date.now();
+                const timeout = 2000; // Таймаут для проверки (2 секунды)
+
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+
+                iframe.src = link;
+
+                const checkTimeout = setTimeout(() => {
+                    document.body.removeChild(iframe);
+                    resolve(false); // Приложение не открыто
+                }, timeout);
+
+                window.addEventListener('blur', () => {
+                    clearTimeout(checkTimeout);
+                    document.body.removeChild(iframe);
+                    resolve(true); // Приложение открылось
+                });
+            });
+        }
+
+        async function checkApps() {
+            for (const link of appLinks) {
+                const opened = await openApp(link);
+                if (opened) {
+                    console.log(Приложение открыто по ссылке: ${link});
+                    return; // Выход из функции, если приложение открылось
+                } else {
+                    console.log(Приложение не найдено по ссылке: ${link});
+                }
+            }
+            console.log('Ни одно из приложений не установлено.');
+        }
+
+        document.getElementById('checkAppsButton').addEventListener('click', checkApps);
+    </script>
 </body>
 </html>
