@@ -44,11 +44,11 @@
             for (const link of appLinks) {
                 const opened = await openApp(link);
                 if (opened) {
-                    console.log(Приложение открыто по ссылке: ${link});
-                    alert(Приложение открыто по ссылке: ${link});
+                    console.log('Приложение открыто по ссылке: ${link}');
+                    alert('Приложение открыто по ссылке: ${link}');
                     return; // Выход из функции, если приложение открылось
                 } else {
-                    console.log(Приложение не найдено по ссылке: ${link});
+                    console.log('Приложение не найдено по ссылке: ${link}');
                 }
             }
             alert('Ни одно из приложений не установлено.');
